@@ -12,9 +12,15 @@ public class GoalManager
         _goals.Add(goal);
     }
 
+    public int GetGoalCount()
+    {
+        return _goals.Count;
+    }
+
     public void DisplayGoals()
     {
         int i = 1;
+
         foreach (Goal g in _goals)
         {
             string status = g.IsComplete() ? "[X]" : "[ ]";
@@ -57,6 +63,8 @@ public class GoalManager
                 output.WriteLine(g.GetStringRepresentation());
             }
         }
+
+        Console.WriteLine("✅ Goals saved!");
     }
 
     // 📂 LOAD
@@ -91,8 +99,11 @@ public class GoalManager
                     int.Parse(data[4]),
                     int.Parse(data[5])
                 );
+
                 _goals.Add(g);
             }
         }
+
+        Console.WriteLine("✅ Goals loaded!");
     }
 }

@@ -40,10 +40,14 @@ class Program
                 int points = int.Parse(Console.ReadLine());
 
                 if (type == "1")
+                {
                     manager.AddGoal(new SimpleGoal(name, desc, points));
+                }
                 else if (type == "2")
+                {
                     manager.AddGoal(new EternalGoal(name, desc, points));
-                else
+                }
+                else if (type == "3")
                 {
                     Console.Write("Target: ");
                     int target = int.Parse(Console.ReadLine());
@@ -61,9 +65,26 @@ class Program
             else if (choice == "3")
             {
                 manager.DisplayGoals();
+
                 Console.Write("Select goal #: ");
-                int index = int.Parse(Console.ReadLine()) - 1;
-                manager.RecordEvent(index);
+
+                if (int.TryParse(Console.ReadLine(), out int index))
+                {
+                    index--; // convert to 0-based index
+
+                    if (index >= 0 && index < manager.GetGoalCount())
+                    {
+                        manager.RecordEvent(index);
+                    }
+                    else
+                    {
+                        Console.WriteLine("❌ Invalid selection. Try again.");
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("❌ Please enter a valid number.");
+                }
             }
             else if (choice == "4")
             {
@@ -78,9 +99,17 @@ class Program
                 string file = Console.ReadLine();
 
                 if (action.ToLower() == "save")
+                {
                     manager.Save(file);
-                else
+                }
+                else if (action.ToLower() == "load")
+                {
                     manager.Load(file);
+                }
+                else
+                {
+                    Console.WriteLine("❌ Invalid option.");
+                }
             }
         }
     }
